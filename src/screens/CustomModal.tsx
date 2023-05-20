@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import {Button, Modal, StyleSheet, Text, View} from 'react-native';
 import {HeaderContent} from '../components';
 import {styles} from '../theme/appTheme';
+import {useThemeStore} from '../states';
 
 export const CustomModal = () => {
+  const {backgroundColor} = useThemeStore(state => state);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, backgroundColor}}>
       <HeaderContent title={'Custom Modal'} />
       <Button title={'Open modal'} onPress={() => setIsVisible(true)} />
       <Modal visible={isVisible} animationType={'fade'} transparent>

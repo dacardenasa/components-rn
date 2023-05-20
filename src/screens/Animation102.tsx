@@ -2,11 +2,13 @@ import React from 'react';
 import {Animated, StyleSheet, View} from 'react-native';
 import {HeaderContent} from '../components';
 import {useAnimation} from '../hooks';
+import {useThemeStore} from '../states';
 
 export const Animation102 = () => {
   const {dragable, dragableResponder} = useAnimation();
+  const {backgroundColor} = useThemeStore(state => state);
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, backgroundColor}}>
       <HeaderContent title={'Animation102'} />
       <Animated.View
         {...dragableResponder.panHandlers}

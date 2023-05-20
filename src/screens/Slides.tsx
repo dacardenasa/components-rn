@@ -11,10 +11,12 @@ import {
 import Carousel from 'react-native-reanimated-carousel';
 import {CarrouselPagination} from '../components';
 import {carrouselItems, Slide} from '../utils';
+import {useThemeStore} from '../states';
 
 const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 
 export const Slides = () => {
+  const {backgroundColor, colors} = useThemeStore(state => state);
   const [activeSlide, setActiveSlide] = useState<number>(0);
   const carrouselRef = useRef(null);
   const lastCarrouselSlide = carrouselItems.length - 1;
@@ -31,11 +33,15 @@ export const Slides = () => {
     }
   };
   const renderItem = (item: Slide) => (
-    <View style={carrouselStyles.carrouselItem}>
+    <View style={{...carrouselStyles.carrouselItem, backgroundColor}}>
       <Image source={item.img} style={carrouselStyles.carrouselItemImage} />
-      <Text style={carrouselStyles.carrouseItemTitle}>{item.title}</Text>
+      <Text style={{...carrouselStyles.carrouseItemTitle, color: colors.text}}>
+        {item.title}
+      </Text>
       <View style={carrouselStyles.separator} />
-      <Text style={carrouselStyles.carrouseItemLabel}>{item.desc}</Text>
+      <Text style={{...carrouselStyles.carrouseItemLabel, color: colors.text}}>
+        {item.desc}
+      </Text>
     </View>
   );
   return (
@@ -51,7 +57,7 @@ export const Slides = () => {
         onSnapToItem={index => setActiveSlide(index)}
         renderItem={({item}) => renderItem(item)}
       />
-      <View style={carrouselStyles.controlBox}>
+      <View style={{...carrouselStyles.controlBox, backgroundColor}}>
         <CarrouselPagination
           carrouselItems={carrouselItems}
           goToSelectedSlide={goToSelectedSlide}

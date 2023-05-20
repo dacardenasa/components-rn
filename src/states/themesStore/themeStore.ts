@@ -1,81 +1,67 @@
-import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {create} from 'zustand';
 import {THEMES} from '../../constants';
 import {ThemeType} from '../../interfaces/appInterfaces';
+import {Theme} from '@react-navigation/native';
 
-interface IThemeProps {
-  backgroundColor: string;
-  title: StyleProp<TextStyle>;
-  subTitle: StyleProp<TextStyle>;
-  buttonPrimary: StyleProp<ViewStyle>;
-}
-
-interface ThemeState {
+interface ThemeState extends Theme {
   currentTheme: ThemeType;
-  theme: IThemeProps;
+  backgroundColor: 'black' | 'white';
   setDarkTheme: () => void;
   setLightTheme: () => void;
 }
 
-const LightTheme: IThemeProps = {
-  backgroundColor: '#ffffff',
-  title: {
-    color: '#000000',
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  subTitle: {
-    color: '#000000',
-    fontSize: 16,
-  },
-  buttonPrimary: {
-    width: 150,
-    height: 40,
-    borderRadius: 4,
-    backgroundColor: '#ffffff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#000000',
+interface ThemeStyles extends Theme {
+  currentTheme: ThemeType;
+  backgroundColor: 'black' | 'white';
+}
+
+const LightTheme: ThemeStyles = {
+  dark: false,
+  backgroundColor: 'white',
+  currentTheme: 'light',
+  colors: {
+    primary: 'black',
+    background: '#ffffff',
+    card: '#ffffff',
+    text: 'black',
+    border: 'black',
+    notification: '#767a74',
   },
 };
 
-const DarkTheme: IThemeProps = {
-  backgroundColor: '#000000',
-  title: {
-    color: '#ffffff',
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  subTitle: {
-    color: '#ffffff',
-    fontSize: 16,
-  },
-  buttonPrimary: {
-    width: 150,
-    height: 40,
-    borderRadius: 4,
-    backgroundColor: '#000000',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ffffff',
+const DarkTheme: ThemeStyles = {
+  dark: true,
+  backgroundColor: 'black',
+  currentTheme: 'dark',
+  colors: {
+    primary: '#FFFFFF',
+    background: '#FFFFFF',
+    card: '#FFFFFF',
+    text: '#FFFFFF',
+    border: '#FFFFFF',
+    notification: 'rgb(255, 69, 58)',
   },
 };
 
 export const useThemeStore = create<ThemeState>()(set => ({
+  dark: false,
+  backgroundColor: 'white',
   currentTheme: THEMES.LIGHT as ThemeType,
-  theme: LightTheme,
+  colors: LightTheme.colors,
   setDarkTheme: () =>
     set(state => ({
       ...state,
+      dark: true,
+      backgroundColor: 'black',
       currentTheme: THEMES.DARK as ThemeType,
-      theme: {...DarkTheme},
+      colors: {...DarkTheme.colors},
     })),
   setLightTheme: () =>
     set(state => ({
       ...state,
+      dark: false,
+      backgroundColor: 'white',
       currentTheme: THEMES.LIGHT as ThemeType,
-      theme: {...LightTheme},
+      colors: {...LightTheme.colors},
     })),
 }));
