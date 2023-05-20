@@ -2,12 +2,14 @@ import React from 'react';
 import {Animated, Button, StyleSheet, View} from 'react-native';
 import {HeaderContent} from '../components';
 import {useAnimation} from '../hooks';
+import {useThemeStore} from '../states';
 
 export const Animation101 = () => {
   const {opacity, position, fadeIn, fadeOut, startMovingPosition} =
     useAnimation();
+  const {backgroundColor} = useThemeStore(state => state);
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, backgroundColor}}>
       <HeaderContent title={'Animation101'} />
       <Animated.View
         style={{

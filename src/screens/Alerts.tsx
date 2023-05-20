@@ -2,8 +2,10 @@ import React from 'react';
 import {Alert, Button, Platform, StyleSheet, View} from 'react-native';
 import {HeaderContent} from '../components';
 import {OS_PLATFORM} from '../constants';
+import {useThemeStore} from '../states';
 
 export const Alerts = () => {
+  const {backgroundColor} = useThemeStore(state => state);
   const toggleAlert = () => {
     Alert.alert(
       'Alert',
@@ -32,7 +34,7 @@ export const Alerts = () => {
     );
   };
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, backgroundColor}}>
       <HeaderContent title={'Alerts'} />
       <View style={styles.separator} />
       <Button title={'alert'} onPress={toggleAlert} />

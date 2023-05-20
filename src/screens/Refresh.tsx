@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import {RefreshControl, ScrollView, View} from 'react-native';
+import {RefreshControl, ScrollView} from 'react-native';
 import {HeaderContent} from '../components';
 import {styles} from '../theme/appTheme';
+import {useThemeStore} from '../states';
 
 export const Refresh = () => {
+  const {backgroundColor} = useThemeStore(state => state);
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const handleRefresh = () => {
@@ -16,12 +18,11 @@ export const Refresh = () => {
 
   return (
     <ScrollView
+      style={{...styles.container, backgroundColor}}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
       }>
-      <View style={styles.container}>
-        <HeaderContent title={'Refresh Control'} />
-      </View>
+      <HeaderContent title={'Refresh Control'} />
     </ScrollView>
   );
 };

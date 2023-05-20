@@ -12,8 +12,10 @@ import {
 import {CustomSwitch, HeaderContent} from '../components';
 import {OS_PLATFORM} from '../constants';
 import {useForm} from '../hooks';
+import {useThemeStore} from '../states';
 
 export const TextInputs = () => {
+  const {backgroundColor, colors} = useThemeStore(state => state);
   const {name, email, phone, isSubscribed, onChange, form} = useForm({
     name: '',
     email: '',
@@ -23,7 +25,7 @@ export const TextInputs = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === OS_PLATFORM.ios ? 'padding' : 'height'}
-      style={styles.container}>
+      style={{...styles.container, backgroundColor}}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.textInputBox}>
           <HeaderContent title={'TextInputs'} />
@@ -32,7 +34,11 @@ export const TextInputs = () => {
             placeholder={'write your name'}
             autoCorrect={false}
             autoCapitalize={'words'}
-            style={styles.textInput}
+            style={{
+              ...styles.textInput,
+              borderColor: colors.border,
+              backgroundColor: colors.background,
+            }}
             onChangeText={(value: string) => onChange(value, 'name')}
             value={name}
           />
@@ -42,7 +48,11 @@ export const TextInputs = () => {
             autoCorrect={false}
             autoCapitalize={'none'}
             keyboardType={'email-address'}
-            style={styles.textInput}
+            style={{
+              ...styles.textInput,
+              borderColor: colors.border,
+              backgroundColor: colors.background,
+            }}
             onChangeText={(value: string) => onChange(value, 'email')}
             value={email}
           />
@@ -50,13 +60,19 @@ export const TextInputs = () => {
           <TextInput
             placeholder={'write your phone'}
             keyboardType={'number-pad'}
-            style={styles.textInput}
+            style={{
+              ...styles.textInput,
+              borderColor: colors.border,
+              backgroundColor: colors.background,
+            }}
             onChangeText={(value: string) => onChange(value, 'phone')}
             value={phone}
           />
           <View style={styles.separator} />
           <View style={styles.switchBox}>
-            <Text style={styles.switchBoxLabel}>Subscribe to newsletter</Text>
+            <Text style={{...styles.switchBoxLabel, color: colors.text}}>
+              Subscribe to newsletter
+            </Text>
             <CustomSwitch
               isOn={isSubscribed}
               onChange={value => onChange(value, 'isSubscribed')}

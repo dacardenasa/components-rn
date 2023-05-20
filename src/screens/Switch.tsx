@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {CustomSwitch, HeaderContent} from '../components';
+import {useThemeStore} from '../states';
 
 interface ISwitchStates {
   isActive: boolean;
@@ -14,6 +15,7 @@ export const SwitchScreen = () => {
     isHungry: false,
     isHappy: false,
   });
+  const {backgroundColor, colors} = useThemeStore(state => state);
 
   const {isActive, isHungry, isHappy} = switchesState;
 
@@ -22,10 +24,12 @@ export const SwitchScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, backgroundColor}}>
       <HeaderContent title={'Switches'} />
       <View style={styles.switchBox}>
-        <Text style={styles.switchBoxLabel}>isActive</Text>
+        <Text style={{...styles.switchBoxLabel, color: colors.text}}>
+          isActive
+        </Text>
         <CustomSwitch
           isOn={isActive}
           onChange={value => toggleSwitch(value, 'isActive')}
@@ -33,7 +37,9 @@ export const SwitchScreen = () => {
       </View>
       <View style={styles.separator} />
       <View style={styles.switchBox}>
-        <Text style={styles.switchBoxLabel}>isHungry</Text>
+        <Text style={{...styles.switchBoxLabel, color: colors.text}}>
+          isHungry
+        </Text>
         <CustomSwitch
           isOn={isHungry}
           onChange={value => toggleSwitch(value, 'isHungry')}
@@ -41,13 +47,17 @@ export const SwitchScreen = () => {
       </View>
       <View style={styles.separator} />
       <View style={styles.switchBox}>
-        <Text style={styles.switchBoxLabel}>isHappy</Text>
+        <Text style={{...styles.switchBoxLabel, color: colors.text}}>
+          isHappy
+        </Text>
         <CustomSwitch
           isOn={isHappy}
           onChange={value => toggleSwitch(value, 'isHappy')}
         />
       </View>
-      <Text>{JSON.stringify(switchesState, null, 5)}</Text>
+      <Text style={{...styles.switchBoxLabel, color: colors.text}}>
+        {JSON.stringify(switchesState, null, 5)}
+      </Text>
     </View>
   );
 };

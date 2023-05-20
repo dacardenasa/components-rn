@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
 import {AnimatedImage, HeaderContent} from '../components';
+import {useThemeStore} from '../states';
 
 export const InfiniteScroll = () => {
+  const {backgroundColor, colors} = useThemeStore(state => state);
   const [numbers, setNumbers] = useState<number[]>([3, 5, 6, 7, 8]);
   const handleMoreData = () => {
     let newNumbers: number[] = [];
@@ -13,12 +15,12 @@ export const InfiniteScroll = () => {
   };
   const renderItem = (item: number) => (
     <AnimatedImage
-      style={{width: '100%', height: 400}}
+      style={styles.animatedImage}
       uri={`https://picsum.photos/id/${item}/800/800`}
     />
   );
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, backgroundColor}}>
       <FlatList
         data={numbers}
         renderItem={({item}) => renderItem(item)}
@@ -27,7 +29,7 @@ export const InfiniteScroll = () => {
         ListHeaderComponent={<HeaderContent title={'Infinite Scroll'} />}
         ListFooterComponent={() => (
           <View style={styles.loaderBox}>
-            <ActivityIndicator size={25} color={'#5cc9f5'} />
+            <ActivityIndicator size={25} color={colors.background} />
           </View>
         )}
       />
@@ -45,4 +47,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  animatedImage: {width: '100%', height: 400},
 });
