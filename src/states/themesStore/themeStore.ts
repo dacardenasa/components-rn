@@ -21,7 +21,7 @@ const LightTheme: ThemeStyles = {
   currentTheme: 'light',
   colors: {
     primary: 'black',
-    background: '#ffffff',
+    background: '#000000',
     card: '#ffffff',
     text: 'black',
     border: 'black',

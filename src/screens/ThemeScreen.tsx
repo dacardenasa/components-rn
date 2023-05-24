@@ -26,7 +26,7 @@ export const ThemeScreen = () => {
           onPress={currentTheme === THEMES.DARK ? setLightTheme : setDarkTheme}>
           <Text
             style={{
-              color: currentTheme === THEMES.DARK ? '#000000' : colors.text,
+              color: currentTheme === THEMES.DARK ? '#000000' : '#ffffff',
             }}>
             Light / Dark
           </Text>
